@@ -1,0 +1,33 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".template.config/template.json" />
+    <File Path="CleanArchitecture.nuspec" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/BudgetAssistant.Core/BudgetAssistant.Core.csproj" />
+    <Project Path="src/BudgetAssistant.Infrastructure/BudgetAssistant.Infrastructure.csproj" />
+    <Project Path="src/BudgetAssistant.UseCases/BudgetAssistant.UseCases.csproj" />
+    <Project Path="src/BudgetAssistant.Web/BudgetAssistant.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/_aspire/">
+    <Project Path="src/BudgetAssistant.AspireHost/BudgetAssistant.AspireHost.csproj" />
+    <Project Path="src/BudgetAssistant.ServiceDefaults/BudgetAssistant.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BudgetAssistant.FunctionalTests/BudgetAssistant.FunctionalTests.csproj">
+      <BuildDependency Project="src/BudgetAssistant.Web/BudgetAssistant.Web.csproj" />
+    </Project>
+    <Project Path="tests/BudgetAssistant.IntegrationTests/BudgetAssistant.IntegrationTests.csproj">
+      <BuildDependency Project="src/BudgetAssistant.Infrastructure/BudgetAssistant.Infrastructure.csproj" />
+    </Project>
+    <Project Path="tests/BudgetAssistant.UnitTests/BudgetAssistant.UnitTests.csproj" />
+  </Folder>
+</Solution>
