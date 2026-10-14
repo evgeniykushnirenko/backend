@@ -110,7 +110,11 @@ public static class Extensions
   {
     // Adding health checks endpoints to applications in non-development environments has security implications.
     // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
-    if (app.Environment.IsDevelopment())
+    // Always map in Development; also map when hosting in containers so Docker Compose can health-check.
+    var exposeHealthChecks = app.Environment.IsDevelopment()
+      || string.Equals(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), "true", StringComparison.OrdinalIgnoreCase);
+
+    if (exposeHealthChecks)
     {
       // All health checks must pass for app to be considered ready to accept traffic after starting
       app.MapHealthChecks(HealthEndpointPath);

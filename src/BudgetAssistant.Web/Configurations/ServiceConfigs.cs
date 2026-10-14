@@ -11,14 +11,16 @@ public static class ServiceConfigs
     services.AddInfrastructureServices(builder.Configuration, logger)
             .AddMediatorSourceGen(logger);
 
-    if (builder.Environment.IsDevelopment())
+    var useFakeEmail = builder.Configuration.GetValue<bool>("Email:UseFake");
+    if (useFakeEmail)
+    {
+      services.AddScoped<IEmailSender, FakeEmailSender>();
+    }
+    else if (builder.Environment.IsDevelopment())
     {
       // Use a local test email server - configured in Aspire
       // See: https://ardalis.com/configuring-a-local-test-email-server/
       services.AddScoped<IEmailSender, MimeKitEmailSender>();
-
-      // Otherwise use this:
-      //builder.Services.AddScoped<IEmailSender, FakeEmailSender>();
     }
     else
     {

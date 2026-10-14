@@ -40,7 +40,12 @@ public static class MiddlewareConfig
       });
     }
 
-    app.UseHttpsRedirection(); // Note this will drop Authorization headers
+    // Skip HTTPS redirect in HTTP-only hosts (e.g. Docker Compose)
+    var urls = app.Configuration["ASPNETCORE_URLS"] ?? string.Empty;
+    if (urls.Contains("https://", StringComparison.OrdinalIgnoreCase))
+    {
+      app.UseHttpsRedirection(); // Note this will drop Authorization headers
+    }
 
     // Run migrations and seed in Development or when explicitly requested via environment variable
     var shouldMigrate = app.Environment.IsDevelopment() || 
